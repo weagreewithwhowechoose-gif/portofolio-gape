@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Kreatif</title>
+    <!-- Mengambil font modern dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           GAYA TAMPILAN (CSS)
+           ========================================= */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151b2b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-1: #00f2fe;
+            --accent-2: #4facfe;
+            --accent-3: #a855f7;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3.5em;
+            font-weight: 800;
+            letter-spacing: 1px;
+            /* Efek teks gradasi */
+            background: linear-gradient(to right, var(--accent-1), var(--accent-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        /* Filter Tombol */
+        .filter-container {
+            text-align: center;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid #334155;
+            padding: 10px 25px;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            border-radius: 50px; /* Bentuk pil */
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent-2);
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .filter-btn.active {
+            color: var(--text-main);
+            border-color: var(--accent-1);
+            background: rgba(0, 242, 254, 0.1);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Grid Galeri */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 20px 40px 80px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Kartu Karya */
+        .item {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .media-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .item img, .item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .item:hover img, .item:hover video {
+            transform: scale(1.08); /* Efek zoom saat di-hover */
+        }
+
+        .item-info {
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to top, var(--card-bg) 80%, transparent);
+        }
+
+        .item-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .item-category {
+            display: inline-block;
+            color: var(--accent-1);
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Ikon Play untuk Video */
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* Responsif untuk HP */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5em; }
+            .gallery { padding: 20px; grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Portofolio Kreatif</h1>
+        <p>Jelajahi dunia Art, Minecraft, dan Motion Graphics</p>
+    </header>
+
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterGaleri('Semua')">Semua</button>
+        <button class="filter-btn" onclick="filterGaleri('Art')">Art</button>
+        <button class="filter-btn" onclick="filterGaleri('Minecraft')">Minecraft</button>
+        <button class="filter-btn" onclick="filterGaleri('Motion Graphic')">Motion Graphic</button>
+    </div>
+
+    <div class="gallery" id="gallery-container">
+        <!-- Karya akan muncul di sini secara otomatis -->
+    </div>
+
+    <script>
+        // ==========================================
+        // AREA PENGATURAN PORTOFOLIO (EDIT DI SINI)
+        // ==========================================
+        const daftarKarya = [
+            {
+                judul: "Karakter Pedang Stellar",
+                kategori: "Art",
+                tipe: "image", 
+                file: "art1.jpg" // Ganti dengan nama file aslimu
+            },
+            {
+                judul: "Dungeon Tersembunyi",
+                kategori: "Minecraft",
+                tipe: "image",
+                file: "thumb1.png"
+            },
+            {
+                judul: "Animasi Intro Logo",
+                kategori: "Motion Graphic",
+                tipe: "video",
+                file: "intro.mp4"
+            }
+            // CARA MENAMBAH KARYA BARU:
+            // Tambahkan koma (,) di atas, lalu copy-paste struktur di bawah ini:
+            // ,{ judul: "Karya Baru", kategori: "Art", tipe: "image", file: "gambar.jpg" }
+        ];
+
+        // ==========================================
+        // SISTEM OTOMATIS (JANGAN DIUBAH)
+        // ==========================================
+        const galleryContainer = document.getElementById('gallery-container');
+
+        function tampilkanKarya(kategoriFilter) {
+            galleryContainer.innerHTML = ''; 
+            
+            const karyaDifilter = kategoriFilter === 'Semua' 
+                ? daftarKarya 
+                : daftarKarya.filter(karya => karya.kategori === kategoriFilter);
+
+            // Animasi kemunculan
+            setTimeout(() => {
+                karyaDifilter.forEach(karya => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item';
+                    
+                    let mediaHTML = '';
+                    let iconHTML = '';
+
+                    if (karya.tipe === 'video') {
+                        // Jika video, tambahkan ikon play buatan
+                        mediaHTML = `<video controls muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="${karya.file}" type="video/mp4"></video>`;
+                        iconHTML = `<div class="play-icon">▶</div>`;
+                    } else {
+                        mediaHTML = `<img src="${karya.file}" alt="${karya.judul}">`;
+                    }
+
+                    itemDiv.innerHTML = `
+                        <div class="media-container">
+                            ${mediaHTML}
+                            ${karya.tipe === 'video' ? iconHTML : ''}
+                        </div>
+                        <div class="item-info">
+                            <h3>${karya.judul}</h3>
+                            <span class="item-category">${karya.kategori}</span>
+                        </div>
+                    `;
+                    galleryContainer.appendChild(itemDiv);
+                });
+            }, 50);
+        }
+
+        function filterGaleri(kategori) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            tampilkanKarya(kategori);
+        }
+
+        // Tampilkan semua karya saat pertama dibuka
+        tampilkanKarya('Semua');
+    </script>
+</body>
+</html>
