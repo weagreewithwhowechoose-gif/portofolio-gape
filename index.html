@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio Kreatif</title>
-    <!-- Mengambil font modern dari Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         /* =========================================
@@ -34,7 +33,7 @@
 
         header {
             text-align: center;
-            padding: 80px 20px 40px;
+            padding: 80px 20px 30px;
         }
 
         header h1 {
@@ -42,7 +41,6 @@
             font-size: 3.5em;
             font-weight: 800;
             letter-spacing: 1px;
-            /* Efek teks gradasi */
             background: linear-gradient(to right, var(--accent-1), var(--accent-3));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -53,6 +51,58 @@
             color: var(--text-muted);
             font-size: 1.2em;
             margin-top: 10px;
+        }
+
+        /* =========================================
+           TOMBOL SOSIAL MEDIA
+           ========================================= */
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            transition: fill 0.3s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Warna khusus saat di-hover */
+        .social-btn.discord:hover {
+            border-color: #5865F2;
+            color: #5865F2;
+            box-shadow: 0 5px 20px rgba(88, 101, 242, 0.3);
+        }
+
+        .social-btn.instagram:hover {
+            border-color: #E1306C;
+            color: #E1306C;
+            box-shadow: 0 5px 20px rgba(225, 48, 108, 0.3);
         }
 
         /* Filter Tombol */
@@ -73,7 +123,7 @@
             font-size: 1em;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
-            border-radius: 50px; /* Bentuk pil */
+            border-radius: 50px;
             transition: all 0.3s ease;
         }
 
@@ -100,7 +150,7 @@
             margin: 0 auto;
         }
 
-        /* Kartu Karya */
+        /* Kartu Karya + Animasi Pop Up Masuk */
         .item {
             background-color: var(--card-bg);
             border-radius: 20px;
@@ -109,6 +159,16 @@
             transition: all 0.4s ease;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            animation: itemPopUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes itemPopUp {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .item:hover {
@@ -122,6 +182,7 @@
             height: 250px;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
 
         .item img, .item video {
@@ -132,7 +193,7 @@
         }
 
         .item:hover img, .item:hover video {
-            transform: scale(1.08); /* Efek zoom saat di-hover */
+            transform: scale(1.08);
         }
 
         .item-info {
@@ -157,7 +218,6 @@
             letter-spacing: 1px;
         }
 
-        /* Ikon Play untuk Video */
         .play-icon {
             position: absolute;
             top: 50%;
@@ -176,10 +236,66 @@
             opacity: 0.8;
         }
 
-        /* Responsif untuk HP */
+        /* Sistem Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(7, 10, 19, 0.95);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 85%;
+            max-height: 85vh;
+            position: relative;
+            transform: scale(0.5);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .lightbox.show .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox img, .lightbox video {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.25);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: var(--text-main);
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-1);
+        }
+
         @media (max-width: 600px) {
             header h1 { font-size: 2.5em; }
             .gallery { padding: 20px; grid-template-columns: 1fr; }
+            .lightbox-content { max-width: 95%; }
         }
     </style>
 </head>
@@ -187,18 +303,42 @@
 
     <header>
         <h1>Portofolio Kreatif</h1>
-        <p>Jelajahi dunia Art, Minecraft, dan Motion Graphics</p>
+        <p>Gatau Bikin Art, Minecraft Thumbnail, dan Motion Graphics?
+        Order Di Gape AJA!</p>
+        
+        <div class="social-container">
+            <a href="https://discord.com/users/syasnotfound" target="_blank" class="social-btn discord">
+                <svg viewBox="0 0 127.14 96.36">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-19.32-72.15ZM42.56,65.36c-5.36,0-9.8-4.83-9.8-10.79s4.38-10.79,9.8-10.79,9.85,4.84,9.8,10.79c0,5.96-4.45,10.79-9.8,10.79Zm42,0c-5.36,0-9.8-4.83-9.8-10.79s4.38-10.79,9.8-10.79,9.85,4.84,9.8,10.79c0,5.96-4.45,10.79-9.8,10.79Z"/>
+                </svg>
+                courtneylondon
+            </a>
+            
+            <a href="https://instagram.com/syasnotfound" target="_blank" class="social-btn instagram">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                InstagramKu
+            </a>
+        </div>
     </header>
 
     <div class="filter-container">
         <button class="filter-btn active" onclick="filterGaleri('Semua')">Semua</button>
         <button class="filter-btn" onclick="filterGaleri('Art')">Art</button>
-        <button class="filter-btn" onclick="filterGaleri('Minecraft')">Minecraft</button>
+        <button class="filter-btn" onclick="filterGaleri('Minecraft Thumbnail')">Minecraft Thumbnail</button>
         <button class="filter-btn" onclick="filterGaleri('Motion Graphic')">Motion Graphic</button>
     </div>
 
     <div class="gallery" id="gallery-container">
-        <!-- Karya akan muncul di sini secara otomatis -->
+        </div>
+
+    <div id="lightbox" class="lightbox" onclick="tutupKarya()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="tutupKarya()">&times;</span>
+            <img id="lightbox-img" src="" style="display: none;">
+            <video id="lightbox-video" controls src="" style="display: none;"></video>
+        </div>
     </div>
 
     <script>
@@ -210,11 +350,11 @@
                 judul: "Karakter Pedang Stellar",
                 kategori: "Art",
                 tipe: "image", 
-                file: "art1.jpg" // Ganti dengan nama file aslimu
+                file: "art1.jpg" 
             },
             {
-                judul: "Thumbnail Youtube 1",
-                kategori: "Minecraft",
+                judul: "Dungeon Tersembunyi",
+                kategori: "Minecraft Thumbnail", 
                 tipe: "image",
                 file: "thumb1.png"
             },
@@ -224,15 +364,15 @@
                 tipe: "video",
                 file: "intro.mp4"
             }
-            // CARA MENAMBAH KARYA BARU:
-            // Tambahkan koma (,) di atas, lalu copy-paste struktur di bawah ini:
-            // ,{ judul: "Karya Baru", kategori: "Art", tipe: "image", file: "gambar.jpg" }
         ];
 
         // ==========================================
         // SISTEM OTOMATIS (JANGAN DIUBAH)
         // ==========================================
         const galleryContainer = document.getElementById('gallery-container');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxVideo = document.getElementById('lightbox-video');
 
         function tampilkanKarya(kategoriFilter) {
             galleryContainer.innerHTML = ''; 
@@ -241,36 +381,33 @@
                 ? daftarKarya 
                 : daftarKarya.filter(karya => karya.kategori === kategoriFilter);
 
-            // Animasi kemunculan
-            setTimeout(() => {
-                karyaDifilter.forEach(karya => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'item';
-                    
-                    let mediaHTML = '';
-                    let iconHTML = '';
+            karyaDifilter.forEach((karya, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.style.animationDelay = `${index * 0.05}s`;
+                
+                let mediaHTML = '';
+                let iconHTML = '';
 
-                    if (karya.tipe === 'video') {
-                        // Jika video, tambahkan ikon play buatan
-                        mediaHTML = `<video controls muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="${karya.file}" type="video/mp4"></video>`;
-                        iconHTML = `<div class="play-icon">▶</div>`;
-                    } else {
-                        mediaHTML = `<img src="${karya.file}" alt="${karya.judul}">`;
-                    }
+                if (karya.tipe === 'video') {
+                    mediaHTML = `<video muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="${karya.file}" type="video/mp4"></video>`;
+                    iconHTML = `<div class="play-icon">▶</div>`;
+                } else {
+                    mediaHTML = `<img src="${karya.file}" alt="${karya.judul}">`;
+                }
 
-                    itemDiv.innerHTML = `
-                        <div class="media-container">
-                            ${mediaHTML}
-                            ${karya.tipe === 'video' ? iconHTML : ''}
-                        </div>
-                        <div class="item-info">
-                            <h3>${karya.judul}</h3>
-                            <span class="item-category">${karya.kategori}</span>
-                        </div>
-                    `;
-                    galleryContainer.appendChild(itemDiv);
-                });
-            }, 50);
+                itemDiv.innerHTML = `
+                    <div class="media-container" onclick="perbesarKarya('${karya.file}', '${karya.tipe}')">
+                        ${mediaHTML}
+                        ${karya.tipe === 'video' ? iconHTML : ''}
+                    </div>
+                    <div class="item-info">
+                        <h3>${karya.judul}</h3>
+                        <span class="item-category">${karya.kategori}</span>
+                    </div>
+                `;
+                galleryContainer.appendChild(itemDiv);
+            });
         }
 
         function filterGaleri(kategori) {
@@ -280,7 +417,30 @@
             tampilkanKarya(kategori);
         }
 
-        // Tampilkan semua karya saat pertama dibuka
+        function perbesarKarya(fileSrc, tipe) {
+            if (tipe === 'video') {
+                lightboxImg.style.display = 'none';
+                lightboxVideo.src = fileSrc;
+                lightboxVideo.style.display = 'block';
+                lightboxVideo.play();
+            } else {
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+                lightboxImg.src = fileSrc;
+                lightboxImg.style.display = 'block';
+            }
+            lightbox.classList.add('show');
+        }
+
+        function tutupKarya() {
+            lightbox.classList.remove('show');
+            setTimeout(() => {
+                lightboxVideo.pause();
+                lightboxVideo.src = '';
+                lightboxImg.src = '';
+            }, 300);
+        }
+
         tampilkanKarya('Semua');
     </script>
 </body>
